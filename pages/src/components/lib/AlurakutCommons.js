@@ -171,7 +171,7 @@ function AlurakutMenuProfileSidebar({ githubUser }) {
   return (
     <div className="alurakutMenuProfileSidebar">
       <div>
-        <img src={`https://github.com/${githubUser}.png`} style={{ borderRadius: '8px' }} />
+        <img src={`https://github.com/${githubUser}.png`} style={{ borderRadius: '8px', width:'60px', height:'60px' }} />
         <hr />
         <p>
           <a className="boxLink" href={`/user/${githubUser}`}>
