@@ -25,15 +25,35 @@ function ProfileSideBar(props) {
   )
 }
 
+function ProfileRelationsBox(props) {
+  return (
+    <ProfileRelationsBoxWrapper>
+    <h2 className="smallTitle">
+          {props.title} ({props.items})
+        </h2>
+      
+      <ul>
+          { /*seguidores.map((itemAtual) =>{
+              return (
+                <li key={itemAtual}>
+                <a href={`/users/${itemAtual}`} key={itemAtual} >
+                  <img src={itemAtua} />
+                  <span>{itemAtual}</span>
+                </a>
+                </li>
+              
+                
+              )
+          }) */}
+          </ul>
+      </ProfileRelationsBoxWrapper>
+  )
+}
+
 
 export default function Home() {
-  const [comunidades, setComunidades] = React.useState([{
-    id: "7543270734572584",
-    title: "Eu odeio acordar cedo",
-    image:"https://hypescience.com/wp-content/uploads/2018/03/acordando-pela-manha-acordar.jpg"
-  }]);
+  const [comunidades, setComunidades] = React.useState([]);
   const githubUser = 'jeffersonf-alves';
-  // const comunidades = ['Alurakut'];
   const pessoasFavoritas = [
     'juunegreiros', 
     'omariosouto', 
@@ -43,6 +63,28 @@ export default function Home() {
     'felipefialho'
   
   ]
+const [seguidores, setSeguidores] = React.useState([]);
+ 
+  React.useEffect(function() {
+    fetch('https://api.github.com/users/jeffersonf-alves/followers')
+    .then((respostaDoServidor) => {
+        return respostaDoServidor.json();
+    })
+    .then((respostaCompleta)=> {
+      console.log(respostaCompleta);
+    });
+
+    fetch("https://graphql.datocms.com", {
+      method:"POST",
+      headers: {
+        'Authorization': '8f1e659d623ec1e56e3160363a03b0',
+        'Content-type':'application/json',
+        'Accept':'application/json'
+      }
+    })
+
+  }, []);
+
 
   return (
     <>
@@ -104,7 +146,13 @@ export default function Home() {
       </div>
       <div className="profileRelationsArea" style={{ gridArea: "profileRelationsArea" }}>
 
+          
+
         <ProfileRelationsBoxWrapper>
+        <h2 className="smallTitle">
+            Comunidades ({pessoasFavoritas.length})
+          </h2>
+        
         <ul>
             { comunidades.map((itemAtual) =>{
                 return (
